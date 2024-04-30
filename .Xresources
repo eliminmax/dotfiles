@@ -1,0 +1,25 @@
+/* Set xterm font and colors */
+xterm*eightBitInput:   false
+xterm*eightBitOutput:  true
+xterm*faceName: UbuntuMono Nerd Font Mono
+xterm*faceSize: 12
+xterm*renderFont: true
+xterm*color0: rgb:30/30/30
+xterm*color1: rgb:ff/00/0f
+xterm*color2: rgb:8c/e0/0a
+xterm*color3: rgb:ff/b9/00
+xterm*color4: rgb:00/8d/f8
+xterm*color5: rgb:6c/43/a5
+xterm*color6: rgb:00/d7/eb
+xterm*color7: rgb:a0/a0/a0
+xterm*color8: rgb:60/60/60
+xterm*color9: rgb:ff/8f/8f
+xterm*color10: rgb:8f/ff/8f
+xterm*color11: rgb:ff/e0/8f
+xterm*color12: rgb:8f/bf/ff
+xterm*color13: rgb:9a/5f/eb
+xterm*color14: rgb:67/ff/ef
+xterm*color15: rgb:ff/ff/ff
+xterm*background: rgb:00/00/00
+xterm*foreground: rgb:e0/e0/e0
+xterm*cursorColor: rgb:d0/d0/d0
