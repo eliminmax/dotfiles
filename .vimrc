@@ -191,6 +191,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'rhysd/vim-llvm'
     " Syntax highlighting for Odin
     Plug 'Tetralux/odin.vim'
+    " Syntax highlighting for Elixir
+    Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 " ###################### "
