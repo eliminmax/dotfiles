@@ -1,0 +1,25 @@
+*
+!/.gitignore.d/dotfiles
+!/.bashrc
+!/.profile
+!/.local/
+/.local/*
+!/.local/bin/
+/.local/bin/*
+!/.local/bin/dotfiles
+!/.xsessionrc
+!/.vimrc
+!/.config
+/.config/*
+!/.config/nvim/
+/.config/nvim/*
+!/.config/nvim/init.lua
+!/.config/bashrc.d
+!/.config/bashrc.d/*.sh
+!/.config/bashrc.d/README
+!/.xonshrc
+!/.Xresources
+!/.gitignore.d/
+/.gitignore.d/*
+!/.gitignore.d/dotfiles
+# vi: ft=gitignore
