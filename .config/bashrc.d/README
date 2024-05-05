@@ -1,0 +1,13 @@
+This directory contains additions to my "~/.bashrc" file, split into separate files. All files with names ending in ".sh" are sourced, in order.
+
+The name should begin with a 2-digit number, to control the order that they are sourced in.
+
+Files in the range 00-09 should be generic set-up - defining aliases, functions, shell options, et cetera.
+
+Files in the range 20-29 should be terminal-specific things - such as defining aliases for kitty's kitten plugins, or dealing with the Tilix VTE stuff.
+
+Files in the range 80-89 should be status messages that are printed to the standard output, and should be used sparingly.
+
+Files in the range 90-99 should be generic set-up, much like 00-09, but specifically for set-up that should be done after the previous files.
+
+Files with a beginning number that ends in 9 should be reserved for tempoarary things, such as setting variables that are already set in `profile`, but are not loaded in the current session.

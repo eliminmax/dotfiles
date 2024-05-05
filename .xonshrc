@@ -1,0 +1,30 @@
+# XONSH WIZARD START
+$AUTO_CD = '1'
+$AUTO_PUSHD = '1'
+$AUTO_SUGGEST_IN_COMPLETIONS = '1'
+# XONSH WIZARD END
+source-bash '~/.config/portable_aliases' --overwrite-alias
+
+$UPDATE_OS_ENVIRON = True
+
+# PROMPT STUFF
+$PROMPT_FIELDS['prompt_end'] = $PROMPT_FIELDS['prompt_end'].replace('$', '@')
+
+color_count = $(tput colors 2>/dev/null).strip()
+
+if color_count in ('256', '16777216'):
+    def exit_status_color():
+        return '124' if $PROMPT_FIELDS['last_return_code']() else '46'
+    $PROMPT = "\x1b[0;1m[\x1b[38;5;{exit_color}m{last_return_code}\x1b[39m] \x1b[38;5;221m{user}@{hostname}\x1b[39m:\x1b[38;5;32m{cwd}\x1b[39m{prompt_end} \x1b[m"
+elif color_count == '8':
+    def exit_status_color():
+        return '31' if $PROMPT_FIELDS['last_return_code']() else '32'
+    $PROMPT = "\x1b[0;1m[\x1b[{exit_color}m{last_return_code}\x1b[39m] \x1b[33m{user}@{hostname}\x1b[39m:\x1b[34m{cwd}\x1b[39m{prompt_end} \x1b[m"
+else:
+    def exit_status_color():
+        return '7' if $PROMPT_FIELDS['last_return_code']() else '27'
+    $PROMPT="\x1b[0;1m[\x1b[{exit_color}m{last_return_code}\x1b[27m] {user}@{hostname}:{cwd}{prompt_end} \x1b[m"
+$PROMPT_FIELDS['exit_color'] = exit_status_color
+
+$XONSH_STYLE_OVERRIDES['Token.Literal.Number.Integer'] = '#dd00ee'
+$XONSH_STYLE_OVERRIDES['Token.Literal.Number.Float'] = '#ee00dd'

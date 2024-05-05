@@ -1,0 +1,6 @@
+. /etc/profile
+. ~/.profile
+
+trackpad_id="$(xinput list | rg TM3383-002 | sed 's/.*id=\([0-9]\+\).*/\1/')"
+xinput set-prop "$trackpad_id" 'libinput Disable While Typing Enabled' 0
+xinput set-prop "$trackpad_id" 'libinput Middle Emulation Enabled' 1
