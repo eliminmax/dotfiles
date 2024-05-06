@@ -27,7 +27,7 @@ export PYENV_ROOT="$HOME/.pyenv"
 # set custom $PATH variable - the order here should show my priorities
 # also remove /bin from the PATH, as it's a symlink to /usr/bin on my system
 clean_path="$(echo "$PATH" | sed 's#:/bin:#:#')"
-export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/pipx/bin:$HOME/.r2env/bin:$clean_path:$HOME/.local/share/flatpak/exports/bin:$HOME/.local/utils/bin:$PYENV_ROOT/bin"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/pipx/bin:$HOME/.r2env/bin:$clean_path:$HOME/.local/share/flatpak/exports/bin:$HOME/.local/utils/bin:$PYENV_ROOT/bin:$PYENV_ROOT/shims"
 unset clean_path
 
 # set GOPATH
