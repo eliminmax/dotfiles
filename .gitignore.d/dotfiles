@@ -16,6 +16,7 @@
 !/.config/nvim/init.lua
 !/.config/bashrc.d
 !/.config/bashrc.d/*.sh
+/.config/bashrc.d/?9-*.sh
 !/.config/bashrc.d/README
 !/.xonshrc
 !/.Xresources
