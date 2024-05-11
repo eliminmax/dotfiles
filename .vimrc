@@ -102,6 +102,8 @@ call plug#begin('~/.vim/plugged')
     " LSP and Treesitter configuration tooling for Neovim
     Plug 'neovim/nvim-lspconfig', Cond(useTSandLSP)
     Plug 'nvim-treesitter/nvim-treesitter', Cond(useTSandLSP, { 'do': ':TSUpdate'})
+    " Add back highlighting for TODO and XXX and FIXME and the like
+    Plug 'folke/todo-comments.nvim', Cond(useTSandLSP)
     Plug 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git', Cond(useTSandLSP, { 'do': ':TSUpdate'})
     " Neovim completion plugin powered by Treesitter and LSP
     Plug 'ms-jpq/coq_nvim', Cond(useTSandLSP)
