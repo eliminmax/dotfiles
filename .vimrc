@@ -125,8 +125,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'airblade/vim-gitgutter'
     " multi-line selection done easy
     Plug 'mg979/vim-visual-multi'
-    " sourcerer color scheme
-    Plug 'xero/sourcerer.vim'
+    " Moonfly color scheme
+    Plug 'bluz71/vim-moonfly-colors'
     " add multi-line comment toggling
     Plug 'tpope/vim-commentary'
     " Text alignment tool - needed for some vim-markdown functionality, even if I
@@ -251,7 +251,7 @@ if !exists('g:vscode')
     if $TERM == 'linux'
         colorscheme default
     else
-        colorscheme sourcerer
+        colorscheme moonfly
     endif
 endif
 
