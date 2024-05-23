@@ -173,6 +173,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'ziglang/zig.vim'
     " Syntax highlighting for Nim
     Plug 'zah/nim.vim'
+    " Highlight POSIX C types as types.
+    Plug 'eliminmax/posix-ctypes.vim'
     " Syntax highlighting for Vala
     Plug 'arrufat/vala.vim'
     " Syntax highlighting for OCaml
