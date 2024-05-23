@@ -9,14 +9,6 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-fi
-
 # Set up pipx with its own bin directory in $PATH
 export PIPX_HOME="$HOME/.local/pipx"
 export PIPX_BIN_DIR="$PIPX_HOME/bin"
@@ -29,6 +21,14 @@ export PYENV_ROOT="$HOME/.pyenv"
 clean_path="$(echo "$PATH" | sed 's#:/bin:#:#')"
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.local/pipx/bin:$HOME/.r2env/bin:$clean_path:$HOME/.local/share/flatpak/exports/bin:$HOME/.local/utils/bin:$PYENV_ROOT/bin:$PYENV_ROOT/shims"
 unset clean_path
+
+# if running bash
+if [ -n "$BASH_VERSION" ]; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ]; then
+	. "$HOME/.bashrc"
+    fi
+fi
 
 # set GOPATH
 export GOPATH="$HOME/.go"
