@@ -102,7 +102,6 @@ call plug#begin('~/.vim/plugged')
     " LSP and Treesitter configuration tooling for Neovim
     Plug 'neovim/nvim-lspconfig', Cond(useTSandLSP)
     Plug 'nvim-treesitter/nvim-treesitter', Cond(useTSandLSP, { 'do': ':TSUpdate'})
-    Plug 'https://gitlab.com/HiPhish/rainbow-delimiters.nvim.git', Cond(useTSandLSP, { 'do': ':TSUpdate'})
     " Neovim completion plugin powered by Treesitter and LSP
     Plug 'ms-jpq/coq_nvim', Cond(useTSandLSP)
     " Better tab name management
