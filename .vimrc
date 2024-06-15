@@ -82,6 +82,11 @@ function! NormalTabs()
     setlocal tabstop=4
     setlocal softtabstop=4
 endfunction
+function! LongTabs()
+    setlocal shiftwidth=8
+    setlocal tabstop=8
+    setlocal softtabstop=8
+endfunction
 
 " ################################### "
 " vim-plug plugin manager plugin list "
@@ -208,6 +213,10 @@ autocmd FileType yaml call ShortTabs()
 autocmd FileType cisco call ShortTabs()
 autocmd FileType markdown call ShortTabs()
 autocmd FileType markdown.jinja call ShortTabs()
+
+" Makefiles can't use spaces, and tabs are 8 characters for them as far as wc
+" is concerned, so might as well
+autocmd Filetype make call LongTabs()
 
 " ############################## "
 " Plugin-specific configurations "
