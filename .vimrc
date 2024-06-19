@@ -290,4 +290,11 @@ endif
 
 " I use Jinja in my mkdocs-powered tech journal, use markdown.jinja as the
 " filetype for it
-autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set ft=markdown.jinja
+autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
+" For eambfc, my personal brainfuck compiler project, non-brainfuck code
+" should have column 81 hightlighted.
+autocmd BufRead,BufNewFile ~/Git/eambfc/* if match(&filetype, "brainfuck") < 0
+            \ | set colorcolumn=81 | endif
+
+" highlight column 81 to help ensure a hard 80-column limit for this file
+" vim: colorcolumn=81
