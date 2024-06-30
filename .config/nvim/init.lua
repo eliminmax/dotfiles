@@ -34,7 +34,7 @@ if nvim_version.major > 0 or nvim_version.minor >= 8 then
 
     -- enable specific LSP servers
     require'lspconfig'.pylsp.setup{}
-    require'lspconfig'.rls.setup{}
+    require'lspconfig'.rust_analyzer.setup{}
     -- LSP keymappings from nvim-lspconfig recommendations
     vim.keymap.set('n', '<C-space>e', vim.diagnostic.open_float)
     vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
