@@ -293,7 +293,7 @@ endif
 autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
 " For eambfc, my personal brainfuck compiler project, non-brainfuck code
 " should have column 81 hightlighted.
-autocmd BufRead,BufNewFile ~/Git/eambfc/* if match(&filetype, "brainfuck") < 0
+autocmd BufRead,BufNewFile ~/Git/eambfc* if match(&filetype, "brainfuck") < 0
             \ | set colorcolumn=81 | endif
 
 " highlight column 81 to help ensure a hard 80-column limit for this file
