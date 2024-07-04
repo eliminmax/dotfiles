@@ -27,6 +27,9 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
+# I don't like gratuitous emoji in the console, this prevents them in some software
+export NO_EMOJI=please
+
 # set GOPATH
 export GOPATH="$HOME/.go"
 
