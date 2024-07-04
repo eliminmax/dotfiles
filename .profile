@@ -31,7 +31,6 @@ fi
 export GOPATH="$HOME/.go"
 
 # change default less(1) behavior
-#
 export LESS=-iSRQ
 
 # set preferred editor
