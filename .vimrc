@@ -295,6 +295,9 @@ autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
 " should have column 81 hightlighted.
 autocmd BufRead,BufNewFile ~/Git/eambfc* if match(&filetype, "brainfuck") < 0
             \ | set colorcolumn=81 | endif
+" For the rust rewrite, overwrite the column limit to 100 for rust files
+autocmd BufRead,BufNewFile ~/Git/eambfc-rs* if match(&filetype, "rust") >= 0
+            \ | set colorcolumn=101 | endif
 
 " highlight column 81 to help ensure a hard 80-column limit for this file
 " vim: colorcolumn=81
