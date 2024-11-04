@@ -271,6 +271,11 @@ if !exists('g:vscode')
     endif
     if $TERM == 'linux'
         colorscheme default
+        " if LIGHT_MODE is set*, use a light color scheme from the vim-scripts
+        " Debian Package
+        " (*typically by ~/.config/bashrc.d/21-kitty-functions.sh)
+    elseif ($LIGHT_MODE == '1')
+        colorscheme chela_light
         " moonfly throws an error if on Neovim versions older than 0.9, but
         " not Vim or newer versions of Neovim
         "
@@ -298,6 +303,9 @@ autocmd BufRead,BufNewFile ~/Git/eambfc* if match(&filetype, "brainfuck") < 0
 " For the rust rewrite, overwrite the column limit to 100 for rust files
 autocmd BufRead,BufNewFile ~/Git/eambfc-rs* if match(&filetype, "rust") >= 0
             \ | set colorcolumn=101 | endif
+" For eamsh as well, my attempt to write a minimal shell, code should have
+" column 81 highlighted
+autocmd BufRead,BufNewFile ~/Git/eamsh/* set colorcolumn=81
 
 " highlight column 81 to help ensure a hard 80-column limit for this file
 " vim: colorcolumn=81
