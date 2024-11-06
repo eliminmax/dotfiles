@@ -23,6 +23,9 @@ if nvim_version.major > 0 or nvim_version.minor >= 8 then
             -- GH: nvim-treesitter/nvim-treesitter issue 1573
             additional_vim_regex_highlighting = { "python", "vim" },
         },
+        indent = {
+            enable = true,
+        },
     }
     vim.opt.foldmethod = "expr"
     vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
