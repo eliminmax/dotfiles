@@ -152,7 +152,7 @@ Plug 'mzlogin/vim-markdown-toc'
 " Jupyter (via jupytext)
 Plug 'goerz/jupytext.vim'
 " Better than default markdown support
-Plug 'plasticboy/vim-markdown', {'for': 'markdown'}
+Plug 'preservim/vim-markdown', {'for': 'markdown'}
 " nginx configuration syntax support
 Plug 'vim-scripts/nginx.vim'
 " syntax support for the assembly-like language from the game Mindustry
