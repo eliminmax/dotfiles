@@ -251,6 +251,7 @@ if !exists('g:vscode')
                 \'\|https\|http\|rcp\|rsync\|sftp\)://.*']
 
     " vim-markdown settings
+    let vim_markdown_new_list_item_indent = 0
     let g:vim_markdown_strikethrough = 1
     let g:vim_markdown_no_extensions_in_markdown = 0
     let g:vim_markdown_autowrite = 1
