@@ -220,7 +220,7 @@ autocmd FileType markdown.jinja call ShortTabs()
 
 " Makefiles can't use spaces, and tabs are 8 characters for them as far as wc
 " is concerned, so might as well go with the flow on that one.
-autocmd Filetype make call LongTabs()
+autocmd FileType make call LongTabs()
 
 " ############################## "
 " Plugin-specific configurations "
