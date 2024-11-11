@@ -217,6 +217,8 @@ autocmd FileType yaml call ShortTabs()
 autocmd FileType cisco call ShortTabs()
 autocmd FileType markdown call ShortTabs()
 autocmd FileType markdown.jinja call ShortTabs()
+autocmd FileType html call ShortTabs()
+autocmd FileType xml call ShortTabs()
 
 " Makefiles can't use spaces, and tabs are 8 characters for them as far as wc
 " is concerned, so might as well go with the flow on that one.
