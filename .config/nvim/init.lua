@@ -12,7 +12,10 @@ end
 
 if nvim_version.major > 0 or nvim_version.minor >= 8 then
 
-    -- Treesitter stuff
+    -- @@@@@@@@@@@@@@@@@@@@ --
+    -- @ Treesitter stuff @ --
+    -- @@@@@@@@@@@@@@@@@@@@ --
+
     require'nvim-treesitter.configs'.setup {
         ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "cpp", "rust", "bash", "markdown" },
         sync_install = false,
@@ -74,15 +77,15 @@ if nvim_version.major > 0 or nvim_version.minor >= 8 then
     --- @ Miscellaneous @ ---
     --- @@@@@@@@@@@@@@@@@ ---
     
-    -- I prefer a more intense colorcolumn - taken from Moonfly's MoonflyCranberry
+    -- I prefer a more intense colorcolumn, so set background to color taken from Moonfly's Cranberry
     if vim.g.colors_name == 'moonfly' then
-        vim.api.nvim_set_hl(0, "ColorColumn", { bg = "#e65e72" })
+        vim.api.nvim_set_hl(0, "ColorColumn", { fg = "#000000", bg = "#e65e72" })
     end
     -- create autocmd to do the above for me
     vim.api.nvim_create_autocmd("ColorScheme", {
         pattern = colorscheme,
         callback = function(ev)
-            vim.cmd('highlight ColorScheme guibg=#e65e72')
+            vim.cmd('highlight ColorScheme guibg=#e65e72 guifg=#000000')
         end
     })
     
