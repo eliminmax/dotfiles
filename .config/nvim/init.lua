@@ -73,9 +73,9 @@ if nvim_version.major > 0 or nvim_version.minor >= 8 then
       end,
     })
 
-    --- @@@@@@@@@@@@@@@@@ ---
-    --- @ Miscellaneous @ ---
-    --- @@@@@@@@@@@@@@@@@ ---
+    -- @@@@@@@@@@@@@@@@@ --
+    -- @ Miscellaneous @ --
+    -- @@@@@@@@@@@@@@@@@ --
     
     -- I prefer a more intense colorcolumn, so set background to color taken from Moonfly's Cranberry
     if vim.g.colors_name == 'moonfly' then
