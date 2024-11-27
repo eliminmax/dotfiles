@@ -105,9 +105,11 @@ command ShortTabs call SetTabSize(2)
 command NormalTabs call SetTabSize(4)
 command LongTabs call SetTabSize(8)
 
-" Annotate
-command Annotate0BSD call ReuseAnnotate("0BSD")
-command AnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
+" More easily annotate my most commonly-used licenses
+command ReuseAnnotate0BSD call ReuseAnnotate("0BSD")
+command ReuseAnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
+" GPL v3 is my go-to license for anything substantial
+command ReuseAnnotate ReuseAnnotateGPL3
 
 " ################################### "
 " vim-plug plugin manager plugin list "
@@ -319,8 +321,9 @@ endif
 " Project-specific configs
 
 " create a buffer-local command to call code formatting function for language
-autocmd BufRead,BufNewFile *.py command -buffer Black call PythonBlack()
-autocmd BufRead,BufNewFile *.[ch] command -buffer ClangFmt call ClangFormat()
+" (use '!' because it gets re-read after invoking one of those commands)
+autocmd BufRead,BufNewFile *.py command! -buffer Black call PythonBlack()
+autocmd BufRead,BufNewFile *.[ch] command! -buffer ClangFmt call ClangFormat()
 " I use Jinja in my mkdocs-powered tech journal, use markdown.jinja as the
 " filetype for it
 autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
