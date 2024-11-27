@@ -67,28 +67,47 @@ nnoremap <space> za
 set belloff=all noerrorbells visualbell t_vb=
 
 " #################### "
-" Function definitions
+" Function definitions "
 " #################### "
-function! ShortTabs()
-    setlocal shiftwidth=2
-    setlocal tabstop=2
-    setlocal softtabstop=2
+function SetTabSize(len)
+    " set softtabstop, shiftwidth, and tabstop to len
+
+    " can't pass len to setlocal directly, so instead construct a string to
+    " execute
+    execute "setlocal sts=" .. a:len .. " sw=" .. a:len .. " ts=" .. a:len
 endfunction
-function! SemiShortTabs()
-    setlocal shiftwidth=3
-    setlocal tabstop=3
-    setlocal softtabstop=3
+
+" REALNAME is defined in ~/config/private_environment
+function ReuseAnnotate(license, copyrightname = $REALNAME)
+    write
+    execute "!reuse annotate " .. shellescape("%:~:.") .. " " ..
+                \ "-l " .. a:license .. " " ..
+                \ "-y $(date +\\\%Y) " ..
+                \ "-c " .. shellescape(a:copyrightname)
 endfunction
-function! NormalTabs()
-    setlocal shiftwidth=4
-    setlocal tabstop=4
-    setlocal softtabstop=4
+
+function PythonBlack()
+    write
+    execute "!black -l79 " .. shellescape("%:~:.")
 endfunction
-function! LongTabs()
-    setlocal shiftwidth=8
-    setlocal tabstop=8
-    setlocal softtabstop=8
+
+function ClangFormat()
+    write
+    execute "!clang-format -i " .. shellescape ("%:~:.")
 endfunction
+
+" ############### "
+" Custom Commands "
+" ############### "
+
+" Set common tab sizes
+command ShortTabs call SetTabSize(2)
+command NormalTabs call SetTabSize(4)
+command LongTabs call SetTabSize(8)
+
+" Annotate
+command Annotate0BSD call ReuseAnnotate("0BSD")
+command AnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
 
 " ################################### "
 " vim-plug plugin manager plugin list "
@@ -100,7 +119,7 @@ let useTSandLSP = has('nvim') &&
 
 " function used to simplify conditionally loading plugins with vim-plug
 " from https://github.com/junegunn/vim-plug/wiki/tips#conditional-activation
-function! Cond(cond, ...)
+function PlugCond(cond, ...)
     let opts = get(a:000, 0, {})
     return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
@@ -108,10 +127,11 @@ endfunction
 " define list of plug-ins to use
 call plug#begin('~/.vim/plugged')
 " LSP and Treesitter configuration tooling for Neovim
-Plug 'neovim/nvim-lspconfig', Cond(useTSandLSP)
-Plug 'nvim-treesitter/nvim-treesitter', Cond(useTSandLSP, {'do': ':TSUpdate'})
+Plug 'neovim/nvim-lspconfig', PlugCond(useTSandLSP)
+Plug 'nvim-treesitter/nvim-treesitter', 
+            \ PlugCond(useTSandLSP, {'do': ':TSUpdate'})
 " Neovim completion plugin powered by Treesitter and LSP
-Plug 'ms-jpq/coq_nvim', Cond(useTSandLSP)
+Plug 'ms-jpq/coq_nvim', PlugCond(useTSandLSP)
 " Better tab name management
 Plug 'gcmt/taboo.vim'
 " Change defaults to something friendlier
@@ -160,7 +180,7 @@ Plug 'purofle/vim-mindustry-logic'
 " Indent according to python's PEP-8 style standard
 Plug 'Vimjas/vim-python-pep8-indent'
 " Add a built-in Autopep8 tool on non-Neovim systems
-Plug 'tell-k/vim-autopep8', Cond(!has('nvim'))
+Plug 'tell-k/vim-autopep8', PlugCond(!has('nvim'))
 " javascript syntax + improved indentation
 Plug 'pangloss/vim-javascript'
 " support for the Caddy web server's Caddyfile configuration format
@@ -168,7 +188,7 @@ Plug 'isobit/vim-caddyfile'
 " Syntax highlighting Cisco IOS command language
 Plug 'CyCoreSystems/vim-cisco-ios'
 " Official Rust Vim Plugin
-Plug 'rust-lang/rust.vim', Cond(!exists('g:vscode'), {'for': 'rust'})
+Plug 'rust-lang/rust.vim', PlugCond(!exists('g:vscode'), {'for': 'rust'})
 " Syntax highlighting for kitty terminal config file
 Plug 'fladson/vim-kitty'
 " Syntax highlighting for xonsh
@@ -205,6 +225,8 @@ Plug 'Tetralux/odin.vim'
 Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
+delfunction PlugCond
+
 " ###################### "
 " Filetype configuration "
 " ###################### "
@@ -213,16 +235,16 @@ call plug#end()
 filetype indent off
 
 " call ShortTabs() for specific file types
-autocmd FileType yaml call ShortTabs()
-autocmd FileType cisco call ShortTabs()
-autocmd FileType markdown call ShortTabs()
-autocmd FileType markdown.jinja call ShortTabs()
-autocmd FileType html call ShortTabs()
-autocmd FileType xml call ShortTabs()
+autocmd FileType yaml ShortTabs
+autocmd FileType cisco ShortTabs
+autocmd FileType markdown ShortTabs
+autocmd FileType markdown.jinja ShortTabs
+autocmd FileType html ShortTabs
+autocmd FileType xml ShortTabs
 
 " Makefiles can't use spaces, and tabs are 8 characters for them as far as wc
 " is concerned, so might as well go with the flow on that one.
-autocmd FileType make call LongTabs()
+autocmd FileType make LongTabs
 
 " ############################## "
 " Plugin-specific configurations "
@@ -296,6 +318,9 @@ endif
 
 " Project-specific configs
 
+" create a buffer-local command to call code formatting function for language
+autocmd BufRead,BufNewFile *.py command -buffer Black call PythonBlack()
+autocmd BufRead,BufNewFile *.[ch] command -buffer ClangFmt call ClangFormat()
 " I use Jinja in my mkdocs-powered tech journal, use markdown.jinja as the
 " filetype for it
 autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
