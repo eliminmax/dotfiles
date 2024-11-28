@@ -26,7 +26,7 @@ endif
 
 " General
 set splitbelow " Open new view below current view
-set splitright " open vertical splits to the right
+set nosplitright " open vertical splits to the left
 set encoding=utf-8 " Use UTF-8 encoding  by default
 set showmatch " Show matching angle brackets
 
@@ -110,6 +110,12 @@ command ReuseAnnotate0BSD call ReuseAnnotate("0BSD")
 command ReuseAnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
 " GPL v3 is my go-to license for anything substantial
 command ReuseAnnotate ReuseAnnotateGPL3
+
+command -nargs=1 -complete=file VSplitRO vsplit +setlocal\ readonly <args>
+command -nargs=1 -complete=file SplitRO split +setlocal\ readonly <args>
+" shortner names for those two
+command -nargs=1 -complete=file VSpRO VSplitRO <args>
+command -nargs=1 -complete=file SpRO SplitRO <args>
 
 " ################################### "
 " vim-plug plugin manager plugin list "
