@@ -1,18 +1,16 @@
 *
-!/.gitignore.d/dotfiles
+!/.byobu
+!/.byobu/.tmux.conf
 !/.bashrc
 !/.profile
 !/.local/
-/.local/*
 !/.local/bin/
-/.local/bin/*
 !/.local/bin/dotfiles
 !/.xsessionrc
+!/.xonshrc
 !/.vimrc
 !/.config
-/.config/*
 !/.config/nvim/
-/.config/nvim/*
 !/.config/nvim/init.lua
 !/.config/bashrc.d
 !/.config/bashrc.d/*.sh
@@ -21,6 +19,6 @@
 !/.xonshrc
 !/.Xresources
 !/.gitignore.d/
-/.gitignore.d/*
 !/.gitignore.d/dotfiles
+
 # vi: ft=gitignore
