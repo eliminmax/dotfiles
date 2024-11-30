@@ -25,4 +25,6 @@ _histignore_append 'ls:ll:la:l:c:clear:id'
 _histignore_append 'history *:h *:history:h:history|*:h|*'
 # don't want job control "fg" and "bg" on their own in history
 _histignore_append "[fb]g"
+# don't want to accidentally wipe trash all the time
+_histignore_append 'trash-empty'
 # vi:ft=bash
