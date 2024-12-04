@@ -26,7 +26,7 @@ endif
 
 " General
 set splitbelow " Open new view below current view
-set nosplitright " open vertical splits to the left
+set splitright " open vertical splits to the right
 set encoding=utf-8 " Use UTF-8 encoding  by default
 set showmatch " Show matching angle brackets
 
