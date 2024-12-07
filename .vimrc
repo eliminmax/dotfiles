@@ -86,16 +86,6 @@ function ReuseAnnotate(license, copyrightname = $REALNAME)
                 \ "-c " .. shellescape(a:copyrightname)
 endfunction
 
-function PythonBlack()
-    write
-    execute "!black -l79 " .. shellescape("%:~:.")
-endfunction
-
-function ClangFormat()
-    write
-    execute "!clang-format -i " .. shellescape ("%:~:.")
-endfunction
-
 " ############### "
 " Custom Commands "
 " ############### "
@@ -324,12 +314,11 @@ if !exists('g:vscode')
     endif
 endif
 
-" Project-specific configs
-
 " create a buffer-local command to call code formatting function for language
-" (use '!' because it gets re-read after invoking one of those commands)
-autocmd BufRead,BufNewFile *.py command! -buffer Black call PythonBlack()
-autocmd BufRead,BufNewFile *.[ch] command! -buffer ClangFmt call ClangFormat()
+autocmd BufRead,BufNewFile *.py command -buffer Black 1,$!black -l79 -q -
+autocmd BufRead,BufNewFile *.[ch] command -buffer ClangFmt 1,$!clang-format
+
+" Project-specific configs
 " I use Jinja in my mkdocs-powered tech journal, use markdown.jinja as the
 " filetype for it
 autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
