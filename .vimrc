@@ -33,7 +33,6 @@ set showmatch " Show matching angle brackets
 " Searching
 set incsearch " Show search matches as query is typed
 set hlsearch " Keep search matches highlighted
-set ignorecase smartcase " Use smart case for pattern matching
 
 " Indentation
 set autoindent " indent automatically
