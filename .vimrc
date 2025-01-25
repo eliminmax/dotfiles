@@ -12,17 +12,14 @@ endif
 
 set linebreak " wrap lines at words, not at the last character that fits
 
-" don't set these if running in vscode
-if !exists('g:vscode')
-    " General
-    set number " Show line numbers by default
-    set mouse=nvc " normal, visual, command, but not insert
-    set background=dark " Use bright colors to better contrast a dark background
-    set lazyredraw " Use a more efficient approach to buffer drawing
-    " Folding behavior
-    set foldlevelstart=8 " Decently high threshold for automatic folding
-    set foldnestmax=8 " Avoid too many folds in memory at once
-endif
+" General
+set number " Show line numbers by default
+set mouse=nvc " normal, visual, command, but not insert
+set background=dark " Use bright colors to better contrast a dark background
+set lazyredraw " Use a more efficient approach to buffer drawing
+" Folding behavior
+set foldlevelstart=8 " Decently high threshold for automatic folding
+set foldnestmax=8 " Avoid too many folds in memory at once
 
 " General
 set splitbelow " Open new view below current view
@@ -185,7 +182,7 @@ Plug 'isobit/vim-caddyfile'
 " Syntax highlighting Cisco IOS command language
 Plug 'CyCoreSystems/vim-cisco-ios'
 " Official Rust Vim Plugin
-Plug 'rust-lang/rust.vim', PlugCond(!exists('g:vscode'), {'for': 'rust'})
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 " Syntax highlighting for kitty terminal config file
 Plug 'fladson/vim-kitty'
 " Syntax highlighting for xonsh
@@ -251,66 +248,63 @@ autocmd FileType make LongTabs
 let g:autopep8_disable_show_diff = 1
 let g:autopep8_on_save = 0
 
-" Do not run in VSCode/Codium
-if !exists('g:vscode')
-    " jupytext.vim - specify flags used to convert from markdown to ipynb file
-    let g:jupytext_to_ipynb_opts = '--update --set-kernel python3 --to=ipynb '.
-                \'--update-metadata ''{"jupytext":{"notebook_metadata_filter":'.
-                \'"-all"},"cell_metadata_filter": "-all"}'''
+" jupytext.vim - specify flags used to convert from markdown to ipynb file
+let g:jupytext_to_ipynb_opts = '--update --set-kernel python3 --to=ipynb '.
+            \'--update-metadata ''{"jupytext":{"notebook_metadata_filter":'.
+            \'"-all"},"cell_metadata_filter": "-all"}'''
 
-    " NERDTree configuration
-    "launch if vim opens a directory without stdin
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter * if argc() == 1 && 
-                \isdirectory(argv()[0]) && !exists('s:std_in') |
-        \ execute 'NERDTree' argv()[0] | wincmd p | enew | 
-        \ execute 'cd '.argv()[0] | endif
+" NERDTree configuration
+"launch if vim opens a directory without stdin
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && 
+            \isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | 
+    \ execute 'cd '.argv()[0] | endif
 
-    " Make sure that EditorConfig plays nice with fugitive, and does not attemt
-    " to load on remote files
-    let g:EditorConfig_exclude_patterns = ['\(fugitive\|scp\|fetch\|dav\|davs'.
-                \'\|https\|http\|rcp\|rsync\|sftp\)://.*']
+" Make sure that EditorConfig plays nice with fugitive, and does not attemt
+" to load on remote files
+let g:EditorConfig_exclude_patterns = ['\(fugitive\|scp\|fetch\|dav\|davs'.
+            \'\|https\|http\|rcp\|rsync\|sftp\)://.*']
 
-    " vim-markdown settings
-    let vim_markdown_new_list_item_indent = 0
-    let g:vim_markdown_strikethrough = 1
-    let g:vim_markdown_no_extensions_in_markdown = 0
-    let g:vim_markdown_autowrite = 1
-    let g:vim_markdown_conceal = 0
-    let g:vim_markdown_conceal_code_blocks = 0
-    " "foo=bar" means that a code block beginning with "```foo" will be
-    " treated as though it began with "bar"
-    let g:vim_markdown_fenced_languages = ['pwsh=ps1', 'posh=ps1',
-                \'powershell=ps1']
+" vim-markdown settings
+let vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_no_extensions_in_markdown = 0
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+" "foo=bar" means that a code block beginning with "```foo" will be
+" treated as though it began with "bar"
+let g:vim_markdown_fenced_languages = ['pwsh=ps1', 'posh=ps1',
+            \'powershell=ps1']
 
-    " Force 256-color in GNU Screen
-        if $TERM == 'screen'
-            set t_Co=256
-        endif
-    " Theming
-    if $COLORTERM == 'truecolor'
-        set termguicolors
+" Force 256-color in GNU Screen
+    if $TERM == 'screen'
+        set t_Co=256
     endif
-    if $TERM == 'linux'
-        colorscheme default
-        " if LIGHT_MODE is set*, use a light color scheme from the vim-scripts
-        " Debian Package
-        " (*typically by ~/.config/bashrc.d/21-kitty-functions.sh)
-    elseif ($LIGHT_MODE == '1')
-        colorscheme chela_light
-        " moonfly throws an error if on Neovim versions older than 0.9, but
-        " not Vim or newer versions of Neovim
-        "
-        " Debian's editor command is a symlink to the default system editor,
-        " which for my system, is Neovim 0.7.2 as packaged for Debian 12, so
-        " that error sometimes appears. Fall back on blacksea from the
-        " vim-scripts Debian package if that would happen.
-    elseif (!has('nvim')) || ( v:lua.vim.version().major > 0 ||
-                \v:lua.vim.version().minor >= 9 )
-        colorscheme moonfly
-    else
-        colorscheme blacksea
-    endif
+" Theming
+if $COLORTERM == 'truecolor'
+    set termguicolors
+endif
+if $TERM == 'linux'
+    colorscheme default
+    " if LIGHT_MODE is set*, use a light color scheme from the vim-scripts
+    " Debian Package
+    " (*typically by ~/.config/bashrc.d/21-kitty-functions.sh)
+elseif ($LIGHT_MODE == '1')
+    colorscheme chela_light
+    " moonfly throws an error if on Neovim versions older than 0.9, but
+    " not Vim or newer versions of Neovim
+    "
+    " Debian's editor command is a symlink to the default system editor,
+    " which for my system, is Neovim 0.7.2 as packaged for Debian 12, so
+    " that error sometimes appears. Fall back on blacksea from the
+    " vim-scripts Debian package if that would happen.
+elseif (!has('nvim')) || ( v:lua.vim.version().major > 0 ||
+            \v:lua.vim.version().minor >= 9 )
+    colorscheme moonfly
+else
+    colorscheme blacksea
 endif
 
 " create a buffer-local command to call code formatting function for language
