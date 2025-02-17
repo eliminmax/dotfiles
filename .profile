@@ -42,5 +42,8 @@ export RLWRAP_HOME="$HOME/.local/share/rlwrap"
 # GTK Theming
 export GTK_THEME=Materia-dark-compact
 
+# wine should not add menu entries
+export WINEDLLOVERRIDES=winemenubuilder.exe=d
+
 # use this file for variables that shouldn't be included in git, like my email (for deb packaging)
 [ -e "$HOME/.config/private_environment" ] && . "$HOME/.config/private_environment"
