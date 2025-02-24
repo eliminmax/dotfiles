@@ -11,17 +11,19 @@ if nvim_version.major > 0 or nvim_version.minor >= 10 then
 end
 
 if nvim_version.major > 0 or nvim_version.minor >= 8 then
-
     -- @@@@@@@@@@@@@@@@@@@@ --
     -- @ Treesitter stuff @ --
     -- @@@@@@@@@@@@@@@@@@@@ --
 
+    require('tree-sitter-just').setup({})
+
     require'nvim-treesitter.configs'.setup {
-        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "cpp", "rust", "bash", "markdown" },
+        ensure_installed = { "c", "lua", "vim", "vimdoc", "query", "python", "cpp", "rust", "bash", "markdown", "just" },
         sync_install = false,
         auto_install = false,
         highlight = {
             enable = true,
+            disable = { "awk" },
             -- workaround for indent issue
             -- GH: nvim-treesitter/nvim-treesitter issue 1573
             additional_vim_regex_highlighting = { "python", "vim", "markdown" },

@@ -217,6 +217,8 @@ Plug 'rhysd/vim-llvm'
 Plug 'Tetralux/odin.vim'
 " Syntax highlighting for Elixir
 Plug 'elixir-editors/vim-elixir'
+" Syntax highlighting for justfiles in neovim
+Plug 'IndianBoy42/tree-sitter-just', PlugCond(useTSandLSP)
 call plug#end()
 
 delfunction PlugCond
