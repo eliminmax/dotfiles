@@ -217,8 +217,6 @@ Plug 'rhysd/vim-llvm'
 Plug 'Tetralux/odin.vim'
 " Syntax highlighting for Elixir
 Plug 'elixir-editors/vim-elixir'
-" Syntax highlighting for justfiles
-Plug 'NoahTheDuke/vim-just'
 call plug#end()
 
 delfunction PlugCond
