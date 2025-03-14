@@ -45,5 +45,8 @@ export GTK_THEME=Materia-dark-compact
 # wine should not add menu entries
 export WINEDLLOVERRIDES=winemenubuilder.exe=d
 
+# use neovim as manpager
+export MANPAGER='nvim +Man!'
+
 # use this file for variables that shouldn't be included in git, like my email (for deb packaging)
 [ -e "$HOME/.config/private_environment" ] && . "$HOME/.config/private_environment"
