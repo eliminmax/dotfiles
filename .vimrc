@@ -322,7 +322,8 @@ autocmd BufRead,BufNewFile *.[ch] command -buffer ClangFmt 1,$!clang-format
 autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
 " For eambfc, my personal brainfuck compiler project, non-brainfuck code
 " should have column 81 hightlighted.
-autocmd BufRead,BufNewFile ~/Git/eambfc* if match(&filetype, "brainfuck") < 0
+autocmd BufRead,BufNewFile ~/Git/eambfc* if match(&filetype, "brainfuck") < 0 &&
+            \ match(&filetype, "markdown") < 0
             \ | set colorcolumn=81 | endif
 " For the rust rewrite, overwrite the column limit to 100 for rust files
 autocmd BufRead,BufNewFile ~/Git/eambfc-rs* if match(&filetype, "rust") >= 0
