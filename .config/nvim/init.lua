@@ -6,8 +6,9 @@ vim.cmd('source ~/.vimrc')
 nvim_version = vim.version()
 
 -- restore error if swapfile exists in nvim 0.10
-if nvim_version.major > 0 or nvim_version.minor >= 10 then
-    vim.cmd('autocmd! nvim_swapfile')
+if nvim_version.major == 0 and nvim_version.minor == 10 then
+    vim.cmd('autocmd! nvim.swapfile')
+elseif nvim_version.major > 0 or nvim_version.minor >= 11 then
 end
 
 if nvim_version.major > 0 or nvim_version.minor >= 8 then
