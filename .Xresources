@@ -1,7 +1,7 @@
 /* Set xterm font and colors */
 xterm*eightBitInput:   false
 xterm*eightBitOutput:  true
-xterm*faceName: UbuntuMono Nerd Font Mono
+xterm*faceName: UbuntuMono
 xterm*faceSize: 12
 xterm*renderFont: true
 xterm*color0: rgb:30/30/30
