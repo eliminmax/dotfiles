@@ -54,6 +54,17 @@ if nvim_version.major > 0 or nvim_version.minor >= 8 then
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('UserLspConfig', {}),
       callback = function(ev)
+        vim.api.nvim_create_user_command(
+            "TypeHintsOn", "lua vim.lsp.inlay_hint.enable(true)", {}
+        )
+        vim.api.nvim_create_user_command(
+            "TypeHintsOff", "lua vim.lsp.inlay_hint.enable(false)", {}
+        )
+        vim.api.nvim_create_user_command(
+            "TypeHintsToggle",
+            "lua vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())",
+            {}
+        )
         vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
         local opts = { buffer = ev.buf }
