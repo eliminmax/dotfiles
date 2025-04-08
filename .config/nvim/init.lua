@@ -43,7 +43,12 @@ if nvim_version.major > 0 or nvim_version.minor >= 8 then
     -- @@@@@@@@@@@@@ --
 
     -- enable specific LSP servers
-    require'lspconfig'.pylsp.setup{}
+    require'lspconfig'.pylsp.setup{
+        plugins = {
+            mypy = { enabled = true },
+            black = { enabled = true },
+        },
+    }
     require'lspconfig'.clangd.setup{}
     -- LSP keymappings from nvim-lspconfig recommendations
     vim.keymap.set('n', '<C-space>e', vim.diagnostic.open_float)
