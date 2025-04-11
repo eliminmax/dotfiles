@@ -226,25 +226,6 @@ call plug#end()
 
 delfunction PlugCond
 
-" ###################### "
-" Filetype configuration "
-" ###################### "
-
-" Don't use filetype-specific indentation settings
-filetype indent off
-
-" call ShortTabs() for specific file types
-autocmd FileType yaml ShortTabs
-autocmd FileType cisco ShortTabs
-autocmd FileType markdown ShortTabs
-autocmd FileType markdown.jinja ShortTabs
-autocmd FileType html ShortTabs
-autocmd FileType xml ShortTabs
-
-" Makefiles can't use spaces, and tabs are 8 characters for them as far as wc
-" is concerned, so might as well go with the flow on that one.
-autocmd FileType make LongTabs
-
 " ############################## "
 " Plugin-specific configurations "
 " ############################## "
