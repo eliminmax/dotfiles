@@ -91,6 +91,9 @@ command ShortTabs call SetTabSize(2)
 command NormalTabs call SetTabSize(4)
 command LongTabs call SetTabSize(8)
 
+" create a scratch buffer
+command ScratchFile new | setlocal bufhidden noswapfile buftype=nofile
+
 " More easily annotate my most commonly-used licenses
 command ReuseAnnotate0BSD call ReuseAnnotate("0BSD")
 command ReuseAnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
