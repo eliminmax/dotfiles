@@ -297,8 +297,8 @@ else
 endif
 
 " create a buffer-local command to call code formatting function for language
-autocmd BufRead,BufNewFile *.py command -buffer Black 1,$!black -l79 -q -
-autocmd BufRead,BufNewFile *.[ch] command -buffer ClangFmt 1,$!clang-format
+autocmd BufRead,BufNewFile *.py command -buffer Black! 1,$!black -l79 -q -
+autocmd BufRead,BufNewFile *.[ch] command -buffer ClangFmt! 1,$!clang-format
 
 " Project-specific configs
 " I use Jinja in my mkdocs-powered tech journal, use markdown.jinja as the
