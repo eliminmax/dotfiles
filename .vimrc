@@ -252,8 +252,8 @@ autocmd VimEnter * if argc() == 1 &&
 let g:EditorConfig_exclude_patterns = ['\(fugitive\|scp\|fetch\|dav\|davs'.
             \'\|https\|http\|rcp\|rsync\|sftp\)://.*']
 
-" rust.vim use 2021 edition for rustfmt
-let g:rustfmt_options = '--edition 2021'
+" rust.vim use 2024 edition for rustfmt
+let g:rustfmt_options = '--edition 2024'
 
 " vim-markdown settings
 let vim_markdown_new_list_item_indent = 0
