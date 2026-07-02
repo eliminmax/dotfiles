@@ -18,7 +18,7 @@ if has('nvim')
     let g:loaded_perl_provider = 0
     let g:loaded_ruby_provider = 0
     au TermOpen * setlocal nonumber " no numbers in Neovim terminal
-    set completeopt=menu,popup,noinsert
+    set completeopt=menu,menuone,popup
 else
     set t_ut= " needed to be able to set background color properly vim
     set nocompatible " Don't attempt vi compatibility
