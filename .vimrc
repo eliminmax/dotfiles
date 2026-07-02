@@ -293,11 +293,6 @@ let g:vim_markdown_fenced_languages = ['pwsh=ps1', 'posh=ps1',
 " prevent vim-markdown from causing problems in java.vim
 let g:java_ignore_markdown = 1
 
-" Force 256-color in GNU Screen
-    if $TERM == 'screen'
-        set t_Co=256
-    endif
-
 " Theming
 if $COLORTERM == 'truecolor'
     set termguicolors
