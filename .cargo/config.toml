@@ -1,0 +1,6 @@
+[alias]
+nt = "nextest run"
+ta = "tarpaulin"
+
+# [target.'cfg(not(all(target_arch = "x86_64", target_os = "linux")))']
+# linker = "clang"

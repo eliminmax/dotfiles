@@ -1,0 +1,350 @@
+" Shared config for Neovim and Vim
+
+" ############ "
+" Basic config "
+" ############ "
+
+" because Neovim is my manpager, calling man can result in nested vim
+" sessions, and neovim doesn't like that very much.
+unlet $MANPAGER
+
+" Settings specific to Vim but not Neovim or visa-versa
+if has('nvim')
+    set clipboard+=unnamedplus
+    if has_key(environ(), 'DISPLAY')
+        let g:clipboard = "xclip"
+    endif
+    let g:loaded_node_provider = 0
+    let g:loaded_perl_provider = 0
+    let g:loaded_ruby_provider = 0
+    au TermOpen * setlocal nonumber " no numbers in Neovim terminal
+    set completeopt=menu,popup,noinsert
+else
+    set t_ut= " needed to be able to set background color properly vim
+    set nocompatible " Don't attempt vi compatibility
+endif
+
+set linebreak " wrap lines at words, not at the last character that fits
+
+" General
+set number " Show line numbers by default
+set mouse=nvc " normal, visual, command, but not insert
+set background=dark " Use bright colors to better contrast a dark background
+set lazyredraw " Use a more efficient approach to buffer drawing
+" Folding behavior
+set foldlevelstart=8 " Decently high threshold for automatic folding
+set foldnestmax=8 " Avoid too many folds in memory at once
+
+" General
+set splitbelow " Open new view below current view
+set splitright " open vertical splits to the right
+set encoding=utf-8 " Use UTF-8 encoding  by default
+set showmatch " Show matching angle brackets
+
+" Searching
+set incsearch " Show search matches as query is typed
+set hlsearch " Keep search matches highlighted
+
+" Indentation
+set autoindent " indent automatically
+set expandtab " Expand tabs to spaces
+set shiftwidth=4 " Define level of indentation
+set tabstop=4 " Define size of a \t character
+set softtabstop=4 " Backspace and tab move up to this many chars
+
+" Save Swap files to ~/.vim/swap and backup files to ~/.vim/backup instead of 
+" the directory of the file; delete backup after successful write.
+" doubling the trailing slash includes the full path in the name of the file
+" so that foo/file.txt and bar/file.txt won't clash.
+set nobackup writebackup backupdir=~/.vim/backup// directory=~/.vim/swap//
+
+" readable statusline with useful info, not as fancy as airline, but good
+" enough for my needs..
+set statusline=%0.32(%f\ %h%w%y%r%m%)%=%(%{wordcount().words}\ words,\ 
+            \%L\ lines\ \ current\ location:\ %l:%c%)
+
+" Keybindings
+nnoremap j gj
+nnoremap k gk
+nnoremap <Down> gj
+nnoremap <Up> gk
+inoremap <Down> <Esc>gjli
+inoremap <Up> <Esc>gkli
+nnoremap ; :nohlsearch<CR>
+nnoremap <space> za
+
+" disable the bell
+set belloff=all noerrorbells visualbell t_vb=
+
+" #################### "
+" Function definitions "
+" #################### "
+function SetTabSize(len)
+    " set softtabstop, shiftwidth, and tabstop to len
+
+    " can't pass len to setlocal directly, so instead construct a string to
+    " execute
+    execute "setlocal sts=" .. a:len .. " sw=" .. a:len .. " ts=" .. a:len
+endfunction
+
+" REALNAME is defined in ~/config/private_environment
+function ReuseAnnotate(license, copyrightname = $REALNAME)
+    write
+    execute "!reuse annotate " .. shellescape("%:~:.") .. " " ..
+                \ "-l " .. a:license .. " " ..
+                \ "-y $(date +\\\%Y) " ..
+                \ "-c " .. shellescape(a:copyrightname)
+endfunction
+
+" ############### "
+" Custom Commands "
+" ############### "
+
+" Set common tab sizes
+command ShortTabs call SetTabSize(2)
+command NormalTabs call SetTabSize(4)
+command LongTabs call SetTabSize(8)
+
+" create a scratch buffer
+command ScratchFile new | setlocal bufhidden noswapfile buftype=nofile
+
+" More easily annotate my most commonly-used licenses
+command ReuseAnnotate0BSD call ReuseAnnotate("0BSD")
+command ReuseAnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
+" GPL v3 is my go-to license for anything substantial
+command ReuseAnnotate ReuseAnnotateGPL3
+
+command -nargs=1 -complete=file VSplitRO vsplit +setlocal\ readonly <args>
+command -nargs=1 -complete=file SplitRO split +setlocal\ readonly <args>
+" shortner names for those two
+command -nargs=1 -complete=file VSpRO VSplitRO <args>
+command -nargs=1 -complete=file SpRO SplitRO <args>
+
+" ################################### "
+" vim-plug plugin manager plugin list "
+" ################################### "
+
+" check if neovim is new enough for Treesitter stuff (i.e. >= 0.8)
+let useTS = has('nvim') &&
+            \ (v:lua.vim.version().major > 0 || v:lua.vim.version().minor >= 10)
+" check if neovim is new enough for LSP stuff (i.e. >= 0.11)
+let useLSP = has('nvim') &&
+            \ (v:lua.vim.version().major > 0 || v:lua.vim.version().minor >= 11)
+" function used to simplify conditionally loading plugins with vim-plug
+" from https://github.com/junegunn/vim-plug/wiki/tips#conditional-activation
+function PlugCond(cond, ...)
+    let opts = get(a:000, 0, {})
+    return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
+" define list of plug-ins to use
+call plug#begin('~/.vim/plugged')
+" LSP and Treesitter configuration tooling for Neovim
+Plug 'neovim/nvim-lspconfig', PlugCond(useLSP)
+Plug 'nvim-treesitter/nvim-treesitter', 
+            \ PlugCond(useTS, {'do': ':TSUpdate'})
+" Better tab name management
+Plug 'gcmt/taboo.vim'
+" Change defaults to something friendlier
+Plug 'tpope/vim-sensible'
+" Git integration that's "so awesome, it should be illegal!"
+Plug 'tpope/vim-fugitive'
+" Sidebar with overview of file contents - requires either exuberant ctags
+" or universal ctags, which are external executables
+Plug 'preservim/tagbar'
+" NERDTree - file sidebar
+Plug 'preservim/nerdtree'
+" git info in NERDtree
+Plug 'Xuyuanp/nerdtree-git-plugin'
+" Nerd Font logos in NERDTree
+Plug 'ryanoasis/vim-devicons'
+" highlighting in NERDTree
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+" See git changes right beside line numbers
+Plug 'airblade/vim-gitgutter'
+" multi-line selection done easy
+Plug 'mg979/vim-visual-multi'
+" Moonfly color scheme
+Plug 'bluz71/vim-moonfly-colors'
+" add multi-line comment toggling
+Plug 'tpope/vim-commentary'
+" Text alignment tool - needed for some vim-markdown functionality, even if I
+" don't use it myself
+Plug 'godlygeek/tabular'
+" EditorConfig support
+Plug 'editorconfig/editorconfig-vim'
+" #################################### "
+" Improved/Additional Language Support "
+" #################################### "
+" Syntax highlighting for Kotlin
+Plug 'udalov/kotlin-vim'
+" Automatically generated Markdown Table of Contents
+Plug 'mzlogin/vim-markdown-toc'
+" Jupyter (via jupytext)
+Plug 'goerz/jupytext.nvim'
+" Better than default markdown support
+Plug 'preservim/vim-markdown', {'for': 'markdown'}
+" nginx configuration syntax support
+Plug 'vim-scripts/nginx.vim'
+" syntax support for the assembly-like language from the game Mindustry
+Plug 'purofle/vim-mindustry-logic'
+" Indent according to python's PEP-8 style standard
+Plug 'Vimjas/vim-python-pep8-indent'
+" Add a built-in Autopep8 tool on non-Neovim systems
+Plug 'tell-k/vim-autopep8', PlugCond(!has('nvim'))
+" javascript syntax + improved indentation
+Plug 'pangloss/vim-javascript'
+" support for the Caddy web server's Caddyfile configuration format
+Plug 'isobit/vim-caddyfile'
+" Syntax highlighting Cisco IOS command language
+Plug 'CyCoreSystems/vim-cisco-ios'
+" Official Rust Vim Plugin
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
+" Syntax highlighting for kitty terminal config file
+Plug 'fladson/vim-kitty'
+" Syntax highlighting for xonsh
+Plug 'meatballs/vim-xonsh'
+" Syntax highlighting for OpenWRT's Universal Configuration Interface
+Plug 'cmcaine/vim-uci'
+" Syntax highlighting for Zig
+Plug 'ziglang/zig.vim'
+" Syntax highlighting for Nim
+Plug 'zah/nim.vim'
+" Highlight POSIX C types as types.
+Plug 'eliminmax/posix-ctypes.vim'
+" Syntax highlighting for Vala
+Plug 'arrufat/vala.vim'
+" Syntax highlighting for OCaml
+Plug 'ocaml/vim-ocaml'
+" Syntax highlighting for Algol 68
+Plug 'sterpe/vim-algol68'
+" Brainfuck interpreter + syntax highlighting
+Plug 'fruit-in/brainfuck-vim'
+" Syntax highlighting for Jinja templates
+Plug 'HiPhish/jinja.vim'
+" Syntax highlighting for Babalang
+Plug 'eliminmax/babalang.vim'
+" Syntax highlighting for Rockstar
+Plug 'sirosen/vim-rockstar'
+" Syntax highlighting for LLVM IR
+Plug 'rhysd/vim-llvm'
+" Syntax highlighting for Odin
+Plug 'Tetralux/odin.vim'
+" Syntax highlighting for Elixir
+Plug 'elixir-editors/vim-elixir'
+" Treesitter syntax for Justfiles
+Plug 'IndianBoy42/tree-sitter-just', PlugCond(useTS)
+" Support the Debug Adapter Protocol
+Plug 'mfussenegger/nvim-dap', PlugCond(useLSP)
+" Support the pest grammar format
+Plug 'pest-parser/pest.vim'
+" Support SMT-LIB2 and z3
+Plug 'bohlender/vim-smt2'
+" Support IAL
+Plug 'eliminmax/tree-sitter-ial', PlugCond(useTS, { 'branch': 'dev' })
+" Support Eclipes's Java LSP server 
+Plug 'mfussenegger/nvim-jdtls', PlugCond(useLSP)
+" Lox syntax highlighting
+Plug 'glochtefeld/lox.vim'
+call plug#end()
+
+delfunction PlugCond
+
+" ############################## "
+" Plugin-specific configurations "
+" ############################## "
+
+" autopep8 - don't run automatically.
+let g:autopep8_disable_show_diff = 1
+let g:autopep8_on_save = 0
+
+" jupytext.vim - specify flags used to convert from markdown to ipynb file
+let g:jupytext_to_ipynb_opts = '--update --set-kernel python3 --to=ipynb '.
+            \'--update-metadata ''{"jupytext":{"notebook_metadata_filter":'.
+            \'"-all"},"cell_metadata_filter": "-all"}'''
+
+" NERDTree configuration
+"launch if vim opens a directory without stdin
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && 
+            \isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | 
+    \ execute 'cd '.argv()[0] | endif
+
+" Make sure that EditorConfig plays nice with fugitive, and does not attemt
+" to load on remote files
+let g:EditorConfig_exclude_patterns = ['\(fugitive\|scp\|fetch\|dav\|davs'.
+            \'\|https\|http\|rcp\|rsync\|sftp\)://.*']
+
+" rust.vim use 2024 edition for rustfmt
+" let g:rustfmt_options = '--edition 2024'
+
+" vim-markdown settings
+let vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_no_extensions_in_markdown = 0
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_conceal_code_blocks = 0
+" "foo=bar" means that a code block beginning with "```foo" will be
+" treated as though it began with "bar"
+let g:vim_markdown_fenced_languages = ['pwsh=ps1', 'posh=ps1',
+            \'powershell=ps1']
+" prevent vim-markdown from causing problems in java.vim
+let g:java_ignore_markdown = 1
+
+" Force 256-color in GNU Screen
+    if $TERM == 'screen'
+        set t_Co=256
+    endif
+
+" Theming
+if $COLORTERM == 'truecolor'
+    set termguicolors
+endif
+
+if $TERM == 'linux'
+    if has('nvim')
+        colorscheme vim
+    else
+        colorscheme default
+    endif
+    " if LIGHT_MODE is set*, use a light color scheme from the vim-scripts
+    " Debian Package
+    " (*typically by ~/.config/bashrc.d/21-kitty-functions.sh)
+elseif ($LIGHT_MODE == '1')
+    colorscheme chela_light
+    " moonfly throws an error if on Neovim versions older than 0.9, but
+    " not Vim or newer versions of Neovim
+elseif (has('nvim'))
+    if (v:lua.vim.version().major > 0 || v:lua.vim.version().minor >= 9)
+        colorscheme moonfly
+    else
+        colorscheme blacksea
+    endif
+else
+    colorscheme clarity
+endif
+
+if has('nvim')
+    command -nargs=+ TSplit split term://<args>
+endif
+
+" create a buffer-local command to call code formatting function for language
+autocmd BufRead,BufNewFile *.py command! -buffer Black 1,$!black -l79 -q -
+autocmd BufRead,BufNewFile *.[ch] command! -buffer ClangFmt 1,$!clang-format
+
+" Project-specific configs
+" I use Jinja in my mkdocs-powered tech journal, use markdown.jinja as the
+" filetype for it
+autocmd BufRead,BufNewFile ~/Git/tech-journal/*.md set filetype=markdown.jinja
+" For eambfc, my personal brainfuck compiler project, non-brainfuck code
+" should have column 81 hightlighted.
+autocmd BufRead,BufNewFile ~/Git/eambfc* if match(&filetype, "brainfuck") < 0
+            \ | set colorcolumn=81 | endif
+" For the rust rewrite, overwrite the column limit to 100 for rust files
+autocmd BufRead,BufNewFile ~/Git/eambfc-rs* if match(&filetype, "rust") >= 0
+            \ | set colorcolumn=101 | endif
+
+" highlight column 81 to help ensure a hard 80-column limit for this file
+" vim: colorcolumn=81

@@ -1,0 +1,5 @@
+. /etc/profile
+. ~/.profile
+xinput set-prop 'ELAN0676:00 04F3:3195 Touchpad' \
+    'libinput Disable While Typing Enabled' 0
+# vi: ft=sh
