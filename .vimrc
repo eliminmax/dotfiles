@@ -87,8 +87,9 @@ function SetTabSize(len)
     execute "setlocal sts=" .. a:len .. " sw=" .. a:len .. " ts=" .. a:len
 endfunction
 
+" GPL v3 is my go-to license for anything substantial
 " REALNAME is defined in ~/config/private_environment
-function ReuseAnnotate(license, copyrightname = $REALNAME)
+function ReuseAnnotate(license = "GPL-3.0-only", copyrightname = $REALNAME)
     write
     execute "!reuse annotate " .. shellescape("%:~:.") .. " " ..
                 \ "-l " .. a:license .. " " ..
@@ -111,8 +112,8 @@ command ScratchFile new | setlocal bufhidden noswapfile buftype=nofile
 " More easily annotate my most commonly-used licenses
 command ReuseAnnotate0BSD call ReuseAnnotate("0BSD")
 command ReuseAnnotateGPL3 call ReuseAnnotate("GPL-3.0-only")
-" GPL v3 is my go-to license for anything substantial
-command ReuseAnnotate ReuseAnnotateGPL3
+command ReuseAnnotateMIT call ReuseAnnotate("MIT")
+command -nargs=? ReuseAnnotate call ReuseAnnotate(<args>)
 
 command -nargs=1 -complete=file VSplitRO vsplit +setlocal\ readonly <args>
 command -nargs=1 -complete=file SplitRO split +setlocal\ readonly <args>
