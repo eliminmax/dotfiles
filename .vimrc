@@ -117,7 +117,7 @@ command -nargs=? ReuseAnnotate call ReuseAnnotate(<args>)
 
 command -nargs=1 -complete=file VSplitRO vsplit +setlocal\ readonly <args>
 command -nargs=1 -complete=file SplitRO split +setlocal\ readonly <args>
-" shortner names for those two
+" shorter names for those two
 command -nargs=1 -complete=file VSpRO VSplitRO <args>
 command -nargs=1 -complete=file SpRO SplitRO <args>
 
