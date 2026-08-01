@@ -63,4 +63,6 @@ alias rustc='rustc --edition=2024'
 # invert colors of X display
 alias xinvert='xcalib -i -a'
 
+alias scratchpad='vim +setlocal\ bufhidden\ noswapfile\ buftype=nofile'
+
 # vim: ft=sh 
