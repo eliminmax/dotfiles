@@ -1,12 +1,7 @@
-# SPDX-FileCopyrightText: 2025 - 2026 Eli Array Minkoff
-#
-# SPDX-License-Identifier: 0BSD
-
 ---
 
 CompileFlags:
   Add:
-    # strict warnings, to help ensure C99 and POSIX 2008 compliance
     - "-Wall"
     - "-Wextra"
     - "-Wpedantic"
@@ -23,14 +18,13 @@ If:
   PathMatch: '.*\.c'
 CompileFlags:
   Add:
+    - "-xc"
     - "-std=gnu23"
-
+---
 If:
   PathMatch: '.*\.h'
 CompileFlags:
   Add:
     - "-xc-header"
     - "-std=gnu23"
----
-
 # vi: ft=yaml ts=2 sts=2 sw=2 et
